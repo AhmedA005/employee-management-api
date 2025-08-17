@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/webjars/**").permitAll()
 
                         // Employee endpoints - method-specific access
-                        .requestMatchers(HttpMethod.GET, "/employees", "/employees/*", "/employees/*/*").hasAnyRole("USER", "HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/employees", "/employees/*", "/employees/*/*", "/employees/by-firstname/*", "/employees/by-lastname/*").hasAnyRole("USER", "HR_MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/employees").hasAnyRole("HR_MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/employees/*").hasAnyRole("HR_MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/employees/*").hasAnyRole("HR_MANAGER", "ADMIN")
@@ -63,6 +63,24 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/departments").hasAnyRole("HR_MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/departments/*").hasAnyRole("HR_MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/departments/*").hasAnyRole("HR_MANAGER", "ADMIN")
+
+                        // Country endpoints
+                        .requestMatchers(HttpMethod.GET, "/countries", "/countries/*").hasAnyRole("USER", "HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/countries").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/countries/*").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/countries/*").hasAnyRole("HR_MANAGER", "ADMIN")
+
+                        // Location endpoints
+                        .requestMatchers(HttpMethod.GET, "/locations", "/locations/*").hasAnyRole("USER", "HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/locations").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/locations/*").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/locations/*").hasAnyRole("HR_MANAGER", "ADMIN")
+
+                        // Region endpoints
+                        .requestMatchers(HttpMethod.GET, "/regions", "/regions/*").hasAnyRole("USER", "HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/regions").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/regions/*").hasAnyRole("HR_MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/regions/*").hasAnyRole("HR_MANAGER", "ADMIN")
 
 
                         // Admin endpoints

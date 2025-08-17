@@ -36,13 +36,13 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping(path = "/{firstName}")
+    @GetMapping(path = "/by-firstname/{firstName}")
     @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
     public Iterable<Employee> getEmployeeByFirstName(@PathVariable String firstName) {
         return employeeService.getEmployeesByFirstName(firstName);
     }
 
-    @GetMapping(path = "/{lastName}")
+    @GetMapping(path = "/by-lastname/{lastName}")
     @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
     public Iterable<Employee> getEmployeeByLastName(@PathVariable String lastName) {
         return employeeService.getEmployeesByLastName(lastName);
@@ -58,6 +58,7 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        employee.setEmployeeId(null);
         Employee createdEmployee = employeeService.createEmployee(employee);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }

@@ -2,12 +2,14 @@ package org.example.efinance.controllers;
 
 import org.example.efinance.entities.Region;
 import org.example.efinance.services.RegionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/regions")
+@PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
 public class RegionController {
 
     private final RegionService regionService;
@@ -29,12 +31,14 @@ public class RegionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Region> createRegion(@RequestBody Region region) {
         Region createdRegion = regionService.createRegion(region);
         return new ResponseEntity<>(createdRegion, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Region> updateRegion(@PathVariable Long id, @RequestBody Region region) {
         Region updatedRegion = regionService.updateRegion(id, region);
         if (updatedRegion != null) {
@@ -45,6 +49,7 @@ public class RegionController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
         regionService.deleteRegionById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

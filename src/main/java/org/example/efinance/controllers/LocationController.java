@@ -2,12 +2,14 @@ package org.example.efinance.controllers;
 
 import org.example.efinance.entities.Location;
 import org.example.efinance.services.LocationService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/locations")
+@PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
 public class LocationController {
 
     private final LocationService locationService;
@@ -28,16 +30,19 @@ public class LocationController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public Location createLocation(@RequestBody Location location) {
         return locationService.createLocation(location);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public Location updateLocation(@PathVariable Long id, @RequestBody Location location) {
         return locationService.updateLocation(id, location);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public void deleteLocation(@PathVariable Long id) {
         locationService.deleteLocation(id);
     }
