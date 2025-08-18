@@ -36,19 +36,19 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping(path = "/by-firstname/{firstName}")
+    @GetMapping(path = "/search/firstname/{firstName}")
     @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
     public Iterable<Employee> getEmployeeByFirstName(@PathVariable String firstName) {
         return employeeService.getEmployeesByFirstName(firstName);
     }
 
-    @GetMapping(path = "/by-lastname/{lastName}")
+    @GetMapping(path = "/search/lastname/{lastName}")
     @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
     public Iterable<Employee> getEmployeeByLastName(@PathVariable String lastName) {
         return employeeService.getEmployeesByLastName(lastName);
     }
 
-    @GetMapping(path = "/{low}/{high}")
+    @GetMapping(path = "/salary-range/{low}/{high}")
     @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
     public List<Employee> getEmployeesByRangeSalary(@PathVariable Long low, @PathVariable Long high){
         return employeeService.getEmployeesWithSalaryBetween(low, high);

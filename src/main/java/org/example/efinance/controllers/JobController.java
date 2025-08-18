@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/jobs")
 @PreAuthorize("hasAnyRole('USER','HR_MANAGER','ADMIN')")
 public class JobController {
     private final JobService jobService;
@@ -17,26 +18,26 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping(path = "/jobs")
+    @GetMapping
     public Iterable<Job> getJobs() {
         return jobService.getAllJobs();
     }
 
-    @GetMapping(path = "/jobs/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Job> getJob(@PathVariable String id) {
         return jobService.getJobById(id)
                 .map(job -> new ResponseEntity<>(job, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping(path = "/jobs")
+    @PostMapping
     @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Job> createJob(@RequestBody Job job) {
         Job createdJob = jobService.createJob(job);
         return new ResponseEntity<>(createdJob, HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/jobs/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Job> updateJob(@PathVariable String id, @RequestBody Job job) {
         Job updatedJob = jobService.updateJob(id, job);
@@ -47,7 +48,7 @@ public class JobController {
         }
     }
 
-    @DeleteMapping(path = "/jobs/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('HR_MANAGER','ADMIN')")
     public ResponseEntity<Void> deleteJob(@PathVariable String id) {
         jobService.deleteJobById(id);
